@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- 模型版本 -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 父坐标 -->
+    <parent>
+        <artifactId>im</artifactId>
+        <groupId>com.jobs</groupId>
+        <version>1.0.0</version>
+    </parent>
+
+    <!-- 坐标 -->
+    <artifactId>im-core</artifactId>
+
+    <!-- 打包类型 -->
+    <packaging>jar</packaging>
+
+    <!-- 属性值 -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <!-- 依赖项-->
+    <dependencies>
+        <!-- base -->
+        <dependency>
+            <groupId>com.jobs</groupId>
+            <artifactId>im-base</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.2.5.RELEASE</version>
+        </dependency>
+        <!-- aop -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <version>2.2.5.RELEASE</version>
+        </dependency>
+    </dependencies>
+</project>

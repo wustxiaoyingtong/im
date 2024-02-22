@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- 模型版本 -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 坐标 -->
+    <groupId>com.jobs</groupId>
+    <artifactId>im</artifactId>
+    <version>1.0.0</version>
+
+    <!-- 父级的pom文件只作项目的子模块的整合，在maven install时不会生成jar包 -->
+    <packaging>pom</packaging>
+
+    <!-- 属性值 -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.8.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- 子模块 -->
+    <modules>
+        <module>im-eureka</module>
+        <module>im-base</module>
+        <module>im-core</module>
+        <module>im-gateway</module>
+        <module>im-feign</module>
+        <module>im-rbac</module>
+    </modules>
+
+</project>
