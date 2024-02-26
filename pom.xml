@@ -34,6 +34,7 @@
         <module>im-eureka</module>
         <module>im-base</module>
         <module>im-core</module>
+        <module>im-model</module>
         <module>im-gateway</module>
         <module>im-feign</module>
         <module>im-rbac</module>

@@ -12,7 +12,11 @@ import lombok.AllArgsConstructor;
  **/
 @AllArgsConstructor
 public enum ApiCodeEnum {
-    SUCCESS(200, "success"), FAIL(500, "fail");
+    SUCCESS(200, "success"), FAIL(500, "fail"), UNAUTHORIZED(401, "unauthorized"), FORBIDDEN(403, "forbidden"),
+    NOT_FOUND(404, "not_found"), METHOD_NOT_ALLOWED(405, "method_not_allowed"),
+    ARGUMENT_ERROR(100001, "argument_error"), DATABASE_ERROR(100002, "database_error"),
+    ACCOUNT_NOT_EXISTS(110001, "account_not_exists"), ACCOUNT_PWD_ERROR(110002, "account_pwd_error"),
+    ACCOUNT_FORBIDDEN(110003, "account_forbidden");
 
     public int code;
 

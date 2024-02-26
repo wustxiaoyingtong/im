@@ -16,16 +16,16 @@
 
     <!-- 依赖项 -->
     <dependencies>
-        <!-- base -->
-        <dependency>
-            <groupId>com.jobs</groupId>
-            <artifactId>im-core</artifactId>
-            <version>1.0.0</version>
-        </dependency>
         <!-- feign -->
         <dependency>
             <groupId>com.jobs</groupId>
             <artifactId>im-feign</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- model -->
+        <dependency>
+            <groupId>com.jobs</groupId>
+            <artifactId>im-model</artifactId>
             <version>1.0.0</version>
         </dependency>
 

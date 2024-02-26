@@ -7,11 +7,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="im-model" />
         <module name="im-feign" />
+        <module name="im-rbac" />
         <module name="im-gateway" />
         <module name="im-eureka" />
         <module name="im-base" />
-        <module name="im-rbac" />
         <module name="im-core" />
       </profile>
     </annotationProcessing>

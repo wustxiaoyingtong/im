@@ -12,6 +12,13 @@
     <artifactId>im-feign</artifactId>
 
     <dependencies>
+        <!-- base -->
+        <dependency>
+            <groupId>com.jobs</groupId>
+            <artifactId>im-base</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <!-- openfeign -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

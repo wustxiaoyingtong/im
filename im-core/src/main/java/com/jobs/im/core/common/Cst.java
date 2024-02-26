@@ -10,4 +10,6 @@ package com.jobs.im.core.common;
  **/
 public interface Cst {
     String MYBATIS_MAPPER_YPE_ALIASES = "com.jobs.im.*.bean.*,com.jobs.im.model.*.*";
+
+    String ACCESS_TOKEN = "Access-Token";
 }

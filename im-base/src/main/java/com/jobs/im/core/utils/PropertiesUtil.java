@@ -32,8 +32,8 @@ public final class PropertiesUtil {
     public static ApiCode get(ApiCodeEnum enu) {
         String code = get(enu.desc + ".code");
         if (StringUtils.isBlank(code)) {
-            return new ApiCode();
+            return new ApiCode(enu.code, enu.desc);
         }
-        return new ApiCode(Integer.valueOf(code), codeMap.getOrDefault(enu.desc + ".msg", null));
+        return new ApiCode(Integer.valueOf(code), codeMap.getOrDefault(enu.desc + ".msg", enu.desc));
     }
 }
