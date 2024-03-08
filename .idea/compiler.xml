@@ -10,6 +10,7 @@
         <module name="im-model" />
         <module name="im-feign" />
         <module name="im-rbac" />
+        <module name="im-chat" />
         <module name="im-gateway" />
         <module name="im-eureka" />
         <module name="im-base" />

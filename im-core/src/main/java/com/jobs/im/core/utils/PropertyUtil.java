@@ -1,6 +1,5 @@
 package com.jobs.im.core.utils;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
@@ -27,16 +26,18 @@ public class PropertyUtil {
     @PostConstruct
     public void init() {
         Properties props = new Properties();
-        try (
-            InputStreamReader baseReader = new InputStreamReader(
-                this.getClass().getClassLoader().getResourceAsStream("application-code-base.properties"),
-                StandardCharsets.UTF_8);
-            InputStreamReader codeReader = new InputStreamReader(
-                this.getClass().getClassLoader().getResourceAsStream("application-code.properties"),
-                StandardCharsets.UTF_8);) {
+        try (InputStreamReader baseReader = new InputStreamReader(
+            this.getClass().getClassLoader().getResourceAsStream("application-code-base.properties"),
+            StandardCharsets.UTF_8)) {
             props.load(baseReader);
+        } catch (Exception e) {
+            log.error("parse properties error.", e);
+        }
+        try (InputStreamReader codeReader =
+            new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("application-code.properties"),
+                StandardCharsets.UTF_8)) {
             props.load(codeReader);
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("parse properties error.", e);
         }
         props.keySet().forEach(key -> {

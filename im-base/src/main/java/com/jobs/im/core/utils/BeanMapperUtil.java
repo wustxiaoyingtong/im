@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 
@@ -70,7 +70,7 @@ public final class BeanMapperUtil {
     }
 
     public static <T> void toJson(JSONObject json, T t) {
-        JSONObject jsonObject = (JSONObject)JSONObject.toJSON(t);
+        JSONObject jsonObject = JSONObject.from(t);
         combineJson(json, jsonObject);
     }
 
