@@ -18,6 +18,7 @@ import com.jobs.im.core.jwt.JwtUtil;
 import com.jobs.im.core.model.PageInfo;
 import com.jobs.im.core.utils.Assert;
 import com.jobs.im.core.utils.BeanMapperUtil;
+import com.jobs.im.core.utils.SysUserUtil;
 import com.jobs.im.feign.dto.ReqAuthenticationInfo;
 import com.jobs.im.feign.dto.RspAuthenticationInfo;
 import com.jobs.im.model.bean.SysUser;
@@ -99,6 +100,9 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
             sysUserMapper.selectList(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, userName));
         if (CollectionUtils.isEmpty(sysUsers)) {
             return RspAuthenticationInfo.builder().success(false).message("凭证账户不存在").build();
+        }
+        if (!SysUserUtil.hasUser(userName)) {
+            return RspAuthenticationInfo.builder().success(false).message("账号已经登出").build();
         }
         SysUser sysUser = sysUsers.stream().findFirst().get();
         if (!SysUserStatus.isAbled(SysUserStatus.valueOf(sysUser.getIsDisabled()))) {

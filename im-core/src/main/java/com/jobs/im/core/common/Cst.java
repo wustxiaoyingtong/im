@@ -10,6 +10,7 @@ package com.jobs.im.core.common;
  **/
 public interface Cst {
     String MYBATIS_MAPPER_YPE_ALIASES = "com.jobs.im.*.bean.*,com.jobs.im.model.*.*";
-
     String ACCESS_TOKEN = "Access-Token";
+    String REDIS_KEY_SYS_USER = "sys:user:info:%s";
+    Long REDIS_KEY_SYS_USER_TIME = 2L;
 }

@@ -1,4 +1,4 @@
-package com.jobs.im.model.dto;
+package com.jobs.im.core.model;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * @program: im
- * @ClassName: RespSysUserLoginDto
+ * @ClassName: SysUserLogin
  * @description:
  * @author: Author
  * @create: 2024-02-23 16:37
@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RespSysUserLoginDto implements Serializable {
+public class SysUserLogin implements Serializable {
     @ApiModelProperty(value = "令牌")
     private String accessToken;
 

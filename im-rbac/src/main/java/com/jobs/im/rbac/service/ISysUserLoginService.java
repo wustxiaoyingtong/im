@@ -2,8 +2,10 @@ package com.jobs.im.rbac.service;
 
 import java.io.UnsupportedEncodingException;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.jobs.im.core.model.SysUserLogin;
 import com.jobs.im.model.dto.ReqSysUserLoginDto;
-import com.jobs.im.model.dto.RespSysUserLoginDto;
 
 /**
  * @program: im
@@ -14,5 +16,7 @@ import com.jobs.im.model.dto.RespSysUserLoginDto;
  * @Version 1.0
  **/
 public interface ISysUserLoginService {
-    RespSysUserLoginDto login(ReqSysUserLoginDto reqDto) throws UnsupportedEncodingException;
+    SysUserLogin login(ReqSysUserLoginDto reqDto) throws UnsupportedEncodingException;
+
+    void logout(HttpServletRequest request);
 }

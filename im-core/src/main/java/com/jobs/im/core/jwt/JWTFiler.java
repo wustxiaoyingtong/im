@@ -61,7 +61,6 @@ public class JWTFiler extends BasicHttpAuthenticationFilter {
         /**
          * 先去调用 isLoginAttempt方法 字面意思就是是否尝试登陆 如果为true 执行executeLogin方法
          */
-
         if (isLoginAttempt(request, response)) {
             if (executeLogin(request, response)) {
                 return true;

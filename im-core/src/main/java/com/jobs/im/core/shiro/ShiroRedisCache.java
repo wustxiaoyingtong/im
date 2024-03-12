@@ -6,7 +6,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
-import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import lombok.AllArgsConstructor;
@@ -38,12 +37,6 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
      */
     @Override
     public V get(K key) throws CacheException {
-        if (key instanceof SimplePrincipalCollection) {
-            // SimplePrincipalCollection simplePrincipalCollection = new SimplePrincipalCollection(
-            // JwtUtils.getUserId(((SimplePrincipalCollection)key).getPrimaryPrincipal().toString()),
-            // AuthRealm.class.getName());
-            // key = (K)simplePrincipalCollection;
-        }
         return redisTemplate.opsForValue().get(key);
     }
 
@@ -52,12 +45,6 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
      */
     @Override
     public V put(K key, V value) throws CacheException {
-        if (key instanceof SimplePrincipalCollection) {
-            // SimplePrincipalCollection simplePrincipalCollection = new SimplePrincipalCollection(
-            // JwtUtils.getUserId(((SimplePrincipalCollection)key).getPrimaryPrincipal().toString()),
-            // AuthRealm.class.getName());
-            // key = (K)simplePrincipalCollection;
-        }
         redisTemplate.opsForValue().set(key, value, this.expireTime, TimeUnit.SECONDS);
         return value;
     }

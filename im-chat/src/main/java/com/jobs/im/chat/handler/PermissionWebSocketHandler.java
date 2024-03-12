@@ -10,6 +10,7 @@ import com.alibaba.fastjson2.JSON;
 import com.jobs.im.chat.factory.ChatUserFactory;
 import com.jobs.im.chat.utils.ChatMessageResultUtil;
 import com.jobs.im.core.jwt.JwtUtil;
+import com.jobs.im.core.utils.SysUserUtil;
 import com.jobs.im.feign.dto.ReqSysUserFgDto;
 import com.jobs.im.feign.dto.RspSysUserFgDto;
 import com.jobs.im.model.bean.ChatCommand;
@@ -53,6 +54,11 @@ public class PermissionWebSocketHandler extends SimpleChannelInboundHandler<Text
             RspSysUserFgDto user = ChatUserFactory.getUser(ReqSysUserFgDto.builder().uid(command.getUid()).build());
             if (Objects.isNull(user) || !user.getUsername().equals(JwtUtil.getUserName(command.getToken()))) {
                 login(ctx);
+                return;
+            }
+            if (!SysUserUtil.hasUser(user.getUsername())) {
+                login(ctx);
+                return;
             }
             ctx.fireChannelRead(frame.retain());
         } catch (Exception e) {

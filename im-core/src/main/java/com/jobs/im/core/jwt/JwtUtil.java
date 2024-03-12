@@ -37,7 +37,7 @@ public class JwtUtil {
     public static String createToken(String username, String password) throws UnsupportedEncodingException {
         // 设置token时间 三小时
         Calendar nowTime = Calendar.getInstance();
-        nowTime.add(Calendar.HOUR, 3);
+        nowTime.add(Calendar.DATE, 1);
         Date date = nowTime.getTime();
         // 密文生成
         return JWT.create().withClaim("username", username).withClaim("password", password).withExpiresAt(date)
