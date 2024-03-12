@@ -76,9 +76,10 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
     }
 
     @Override
-    public SysUser getUserByName(ReqSysUserDto reqDto) {
-        List<SysUser> sysUsers =
-            sysUserMapper.selectList(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, reqDto.getUsername()));
+    public SysUser getUser(ReqSysUserDto reqDto) {
+        List<SysUser> sysUsers = sysUserMapper.selectList(Wrappers.<SysUser>lambdaQuery()
+            .eq(StringUtils.isNotBlank(reqDto.getUsername()), SysUser::getUsername, reqDto.getUsername())
+            .eq(!Objects.isNull(reqDto.getUid()), SysUser::getUid, reqDto.getUid()));
         Assert.isTrue(CollectionUtils.isNotEmpty(sysUsers), ApiCodeEnum.ACCOUNT_NOT_EXISTS);
         return sysUsers.stream().findFirst().get();
     }

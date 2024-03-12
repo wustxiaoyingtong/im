@@ -1,5 +1,11 @@
 package com.jobs.im.chat.handler;
 
+import com.jobs.im.chat.factory.ChatUserFactory;
+import com.jobs.im.chat.utils.ChatMessageResultUtil;
+import com.jobs.im.model.bean.ChatCommand;
+
+import io.netty.channel.ChannelHandlerContext;
+
 /**
  * @program: im
  * @ClassName: ConnectionHandler
@@ -9,7 +15,8 @@ package com.jobs.im.chat.handler;
  * @Version 1.0
  **/
 public final class ConnectionHandler {
-    public static void execute() {
-
+    public static void execute(ChannelHandlerContext ctx, ChatCommand command) {
+        ChatUserFactory.USERS.put(command.getUid(), ctx.channel());
+        ctx.channel().writeAndFlush(ChatMessageResultUtil.success("已与服务器连接成功"));
     }
 }

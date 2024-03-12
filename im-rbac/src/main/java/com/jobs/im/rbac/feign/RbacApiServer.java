@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jobs.im.core.utils.BeanMapperUtil;
 import com.jobs.im.feign.client.RbacApiClient;
 import com.jobs.im.feign.dto.ReqAuthenticationInfo;
+import com.jobs.im.feign.dto.ReqSysUserFgDto;
 import com.jobs.im.feign.dto.RspAuthenticationInfo;
+import com.jobs.im.feign.dto.RspSysUserFgDto;
+import com.jobs.im.model.dto.ReqSysUserDto;
 import com.jobs.im.rbac.service.ISysUserService;
 
 /**
@@ -33,5 +37,12 @@ public class RbacApiServer implements RbacApiClient {
     public RspAuthenticationInfo
         getAuthenticationInfo(@Valid @RequestBody ReqAuthenticationInfo reqAuthenticationInfo) {
         return sysUserService.getAuthenticationInfo(reqAuthenticationInfo);
+    }
+
+    @Override
+    @PostMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_VALUE)
+    public RspSysUserFgDto getUser(ReqSysUserFgDto req) {
+        return BeanMapperUtil.map(sysUserService.getUser(BeanMapperUtil.map(req, ReqSysUserDto.class)),
+            RspSysUserFgDto.class);
     }
 }

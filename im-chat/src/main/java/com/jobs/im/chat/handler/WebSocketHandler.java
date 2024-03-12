@@ -25,7 +25,7 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
             ChatCommand command = JSON.parseObject(frame.text(), ChatCommand.class);
             switch (ChatCommandType.valueOf(command.getCode())) {
                 case CONNECTION:
-                    ConnectionHandler.execute();
+                    ConnectionHandler.execute(ctx, command);
                     break;
                 default:
                     ctx.channel().writeAndFlush(ChatMessageResultUtil.fail("不支持的IM命令"));

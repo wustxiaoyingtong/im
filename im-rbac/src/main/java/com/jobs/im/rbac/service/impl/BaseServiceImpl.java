@@ -16,9 +16,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Maps;
 import com.jobs.im.core.enu.ApiCodeEnum;
+import com.jobs.im.core.model.BaseDto;
 import com.jobs.im.core.model.PageInfo;
 import com.jobs.im.core.utils.Assert;
-import com.jobs.im.model.dto.BaseDto;
 
 /**
  * @program: im

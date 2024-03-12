@@ -27,6 +27,9 @@ public class RespSysUserLoginDto implements Serializable {
     @ApiModelProperty(value = "用户ID")
     private Integer id;
 
+    @ApiModelProperty(value = "uid")
+    private Long uid;
+
     @ApiModelProperty(value = "用户名")
     private String username;
 

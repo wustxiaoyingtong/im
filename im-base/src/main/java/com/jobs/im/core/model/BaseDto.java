@@ -1,4 +1,4 @@
-package com.jobs.im.model.dto;
+package com.jobs.im.core.model;
 
 import java.io.Serializable;
 import java.util.Date;

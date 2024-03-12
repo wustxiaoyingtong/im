@@ -13,7 +13,7 @@ import com.jobs.im.model.service.BaseService;
  * @since 2024-02-23 14:00:45
  */
 public interface ISysUserService extends BaseService<SysUser, ReqSysUserDto> {
-    SysUser getUserByName(ReqSysUserDto reqDto);
+    SysUser getUser(ReqSysUserDto reqDto);
 
     RspAuthenticationInfo getAuthenticationInfo(ReqAuthenticationInfo reqAuthenticationInfo);
 }

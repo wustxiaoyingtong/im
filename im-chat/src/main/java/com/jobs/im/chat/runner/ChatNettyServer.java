@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -12,6 +13,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.jobs.im.chat.handler.PermissionWebSocketHandler;
 import com.jobs.im.chat.handler.WebSocketHandler;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -49,6 +51,9 @@ public class ChatNettyServer implements ApplicationRunner, DisposableBean {
     @Value("${chat.port:28080}")
     private int port;
 
+    @Autowired
+    private PermissionWebSocketHandler permissionWebSocketHandler;
+
     @Override
     public void destroy() throws Exception {
 
@@ -72,9 +77,11 @@ public class ChatNettyServer implements ApplicationRunner, DisposableBean {
                         // 支持大数据流
                         .addLast(new ChunkedWriteHandler())
                         // 对http消息做聚合操作.FullHttpRequest,FullHttpResponse
-                        .addLast(new HttpObjectAggregator(1024 * 64))
+                        .addLast(new HttpObjectAggregator(1024 * 64)).addLast()
                         // websocket
                         .addLast(new WebSocketServerProtocolHandler("/"))
+                        // 登录校验
+                        .addLast(permissionWebSocketHandler)
                         // 自定义
                         .addLast(new WebSocketHandler());
                 }

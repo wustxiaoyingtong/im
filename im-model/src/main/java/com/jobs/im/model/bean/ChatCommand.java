@@ -23,6 +23,9 @@ public class ChatCommand implements Serializable {
     // 连接信息编码
     int code;
 
-    // 昵称
-    String nickName;
+    // 用户uid
+    Long uid;
+
+    // 登录的token
+    String token;
 }

@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+import com.jobs.im.core.model.BaseDto;
 import com.jobs.im.core.model.PageInfo;
-import com.jobs.im.model.dto.BaseDto;
 
 /**
  * @program: im

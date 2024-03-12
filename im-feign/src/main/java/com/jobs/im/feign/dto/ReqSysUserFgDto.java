@@ -1,4 +1,4 @@
-package com.jobs.im.model.dto;
+package com.jobs.im.feign.dto;
 
 import java.util.Date;
 
@@ -11,17 +11,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 系统用户表(SpSysUser)表实ReqDto
- *
- * @author wust
- * @since 2024-02-23 14:00:45
- */
+ * @program: im
+ * @ClassName: ReqSysUserFgDto
+ * @description:
+ * @author: Author
+ * @create: 2024-03-12 11:43
+ * @Version 1.0
+ **/
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReqSysUserDto extends BaseDto {
-
+public class ReqSysUserFgDto extends BaseDto {
     @ApiModelProperty(value = "主键")
     private Integer id;
 

@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 import com.alibaba.fastjson2.JSON;
 import com.jobs.im.model.bean.ChatMessageResult;
 
+import io.netty.handler.codec.http.websocketx.CloseWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketCloseStatus;
 
 /**
  * @program: im
@@ -19,6 +21,10 @@ public final class ChatMessageResultUtil {
     public static TextWebSocketFrame fail(String message) {
         return new TextWebSocketFrame(JSON.toJSONString(ChatMessageResult.builder().name("system").nickName("系统消息")
             .time(LocalDateTime.now()).message(message).build()));
+    }
+
+    public static CloseWebSocketFrame login() {
+        return new CloseWebSocketFrame(WebSocketCloseStatus.NORMAL_CLOSURE, "请先登录");
     }
 
     public static TextWebSocketFrame success(String message) {

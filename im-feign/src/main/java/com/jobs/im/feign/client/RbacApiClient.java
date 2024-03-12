@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.jobs.im.feign.client.fallback.RbacApiClientFallbackFactory;
 import com.jobs.im.feign.common.Cst;
 import com.jobs.im.feign.dto.ReqAuthenticationInfo;
+import com.jobs.im.feign.dto.ReqSysUserFgDto;
 import com.jobs.im.feign.dto.RspAuthenticationInfo;
+import com.jobs.im.feign.dto.RspSysUserFgDto;
 
 /**
  * @program: im
@@ -21,4 +23,7 @@ import com.jobs.im.feign.dto.RspAuthenticationInfo;
 public interface RbacApiClient {
     @PostMapping(value = "/feign/getAuthenticationInfo", produces = MediaType.APPLICATION_JSON_VALUE)
     RspAuthenticationInfo getAuthenticationInfo(ReqAuthenticationInfo reqAuthenticationInfo);
+
+    @PostMapping(value = "/feign/getUser", produces = MediaType.APPLICATION_JSON_VALUE)
+    RspSysUserFgDto getUser(ReqSysUserFgDto req);
 }

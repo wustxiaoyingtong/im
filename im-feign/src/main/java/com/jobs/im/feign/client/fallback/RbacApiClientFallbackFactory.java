@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 
 import com.jobs.im.feign.client.RbacApiClient;
 import com.jobs.im.feign.dto.ReqAuthenticationInfo;
+import com.jobs.im.feign.dto.ReqSysUserFgDto;
 import com.jobs.im.feign.dto.RspAuthenticationInfo;
+import com.jobs.im.feign.dto.RspSysUserFgDto;
 
 import feign.hystrix.FallbackFactory;
 
@@ -28,6 +30,11 @@ public class RbacApiClientFallbackFactory implements FallbackFactory<RbacApiClie
         return new RbacApiClient() {
             @Override
             public RspAuthenticationInfo getAuthenticationInfo(ReqAuthenticationInfo reqAuthenticationInfo) {
+                return null;
+            }
+
+            @Override
+            public RspSysUserFgDto getUser(ReqSysUserFgDto req) {
                 return null;
             }
         };
