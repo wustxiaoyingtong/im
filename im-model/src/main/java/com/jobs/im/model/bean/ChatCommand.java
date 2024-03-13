@@ -3,7 +3,6 @@ package com.jobs.im.model.bean;
 import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +15,6 @@ import lombok.NoArgsConstructor;
  * @Version 1.0
  **/
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatCommand implements Serializable {

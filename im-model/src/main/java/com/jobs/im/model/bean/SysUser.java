@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("sp_sys_user")
+@TableName("im_sys_user")
 public class SysUser implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
@@ -77,18 +77,18 @@ public class SysUser implements Serializable {
     /**
      * 创建时间
      **/
-    @TableField(value = "create_at")
+    @TableField(value = "create_at", fill = FieldFill.INSERT)
     private Date createAt;
 
     @TableField(value = "create_by", fill = FieldFill.INSERT)
-    private String createBy;
+    private Integer createBy;
 
     /**
      * 更新时间
      **/
-    @TableField(value = "update_at")
+    @TableField(value = "update_at", fill = FieldFill.UPDATE)
     private Date updateAt;
 
-    @TableField(value = "update_by", fill = FieldFill.INSERT)
-    private String updateBy;
+    @TableField(value = "update_by", fill = FieldFill.UPDATE)
+    private Integer updateBy;
 }

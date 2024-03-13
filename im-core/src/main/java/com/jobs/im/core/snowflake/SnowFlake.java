@@ -97,7 +97,7 @@ public class SnowFlake {
         this.machineId = machineId;
     }
 
-    public static SnowFlake init(long dataCenterId, long machineId) {
+    private static SnowFlake init(long dataCenterId, long machineId) {
         return new SnowFlake(dataCenterId, machineId);
     }
 
@@ -108,7 +108,7 @@ public class SnowFlake {
      *
      * @return ID
      */
-    public synchronized long nextId() {
+    private synchronized long nextId() {
         long currStamp = getCurrentTimestamp();
         if (currStamp < lastStamp) {
             throw new RuntimeException("Clock moved backwards.Refusing to generate id.");

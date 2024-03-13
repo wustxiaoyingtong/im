@@ -8,15 +8,15 @@ import io.netty.channel.ChannelHandlerContext;
 
 /**
  * @program: im
- * @ClassName: ConnectionHandler
+ * @ClassName: DisConnectionHandler
  * @description:
  * @author: Author
- * @create: 2024-02-27 16:11
+ * @create: 2024-03-13 15:26
  * @Version 1.0
  **/
-public final class ConnectionHandler {
+public final class DisConnectionHandler {
     public static void execute(ChannelHandlerContext ctx, ChatCommand command) {
-        ChatUserFactory.putChannel(command.getUid(), ctx.channel());
-        ctx.channel().writeAndFlush(ChatMessageResultUtil.success("已与服务器连接成功"));
+        ChatUserFactory.delChannel(command.getUid());
+        ctx.channel().writeAndFlush(ChatMessageResultUtil.success("下线成功"));
     }
 }

@@ -69,13 +69,13 @@ public class RspSysUserFgDto implements Serializable {
      **/
     private Date createAt;
 
-    private String createBy;
+    private Integer createBy;
 
     /**
      * 更新时间
      **/
     private Date updateAt;
 
-    private String updateBy;
+    private Integer updateBy;
 
 }

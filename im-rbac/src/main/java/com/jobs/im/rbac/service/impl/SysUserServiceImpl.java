@@ -13,12 +13,15 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.jobs.im.core.common.Cst;
 import com.jobs.im.core.enu.ApiCodeEnum;
 import com.jobs.im.core.jwt.JwtUtil;
 import com.jobs.im.core.model.PageInfo;
 import com.jobs.im.core.model.SysUserLogin;
+import com.jobs.im.core.snowflake.SnowFlake;
 import com.jobs.im.core.utils.Assert;
 import com.jobs.im.core.utils.BeanMapperUtil;
+import com.jobs.im.core.utils.PasswordEncoderUtil;
 import com.jobs.im.core.utils.SysUserUtil;
 import com.jobs.im.feign.dto.ReqAuthenticationInfo;
 import com.jobs.im.feign.dto.RspAuthenticationInfo;
@@ -41,9 +44,12 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
 
     @Override
     public int add(ReqSysUserDto reqSysUserDto) throws RuntimeException {
-        List<SysUser> list =
-            sysUserMapper.selectList(new LambdaQueryWrapper<SysUser>().eq(SysUser::getId, reqSysUserDto.getId()));
-        Assert.isTrue(CollectionUtils.isEmpty(list), "Id重复");
+        List<SysUser> list = sysUserMapper
+            .selectList(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, reqSysUserDto.getUsername()));
+        Assert.isTrue(CollectionUtils.isEmpty(list), ApiCodeEnum.USERNAME_DUPLICATED);
+        reqSysUserDto.setUid(SnowFlake.next());
+        reqSysUserDto.setPassword(PasswordEncoderUtil.encode(Cst.PASSWD_DEFAULT));
+        reqSysUserDto.setIsDisabled(SysUserStatus.SYS_USER_IS_ENABLED.value);
         return sysUserMapper.insert(BeanMapperUtil.map(reqSysUserDto, SysUser.class));
     }
 
@@ -107,7 +113,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
         }
         SysUserLogin user = SysUserUtil.getUser(userName);
         if (!user.getAccessToken().equals(accessToken)) {
-            return RspAuthenticationInfo.builder().success(false).message("账号已经登出").build();
+            return RspAuthenticationInfo.builder().success(false).message("凭证验证失败").build();
         }
         SysUser sysUser = sysUsers.stream().findFirst().get();
         if (!SysUserStatus.isAbled(SysUserStatus.valueOf(sysUser.getIsDisabled()))) {

@@ -16,7 +16,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ChatCommandType {
-    CONNECTION(100001, "建立连接"), ERROR(-1, "错误编码");
+    CONNECTION(100001, "建立连接"), DISCONNECTION(100002, "断开连接"), CHAT(100003, "聊天"), ERROR(-1, "错误编码");
 
     public Integer code;
 

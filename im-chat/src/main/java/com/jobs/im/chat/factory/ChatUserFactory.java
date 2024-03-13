@@ -19,7 +19,19 @@ import io.netty.channel.Channel;
  * @Version 1.0
  **/
 public final class ChatUserFactory {
-    public static Map<Long, Channel> USERS = new ConcurrentHashMap<>();
+    private static Map<Long, Channel> USERS = new ConcurrentHashMap<>();
+
+    public static void putChannel(Long uid, Channel channel) {
+        USERS.put(uid, channel);
+    }
+
+    public static Channel getChannel(Long uid) {
+        return USERS.get(uid);
+    }
+
+    public static void delChannel(Long uid) {
+        USERS.remove(uid);
+    }
 
     public static RspSysUserFgDto getUser(ReqSysUserFgDto req) {
         FeignBeanAgent feignBeanAgent = SpringContextHolder.getBean("feignBeanAgent");

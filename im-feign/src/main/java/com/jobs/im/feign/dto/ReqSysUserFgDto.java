@@ -54,11 +54,11 @@ public class ReqSysUserFgDto extends BaseDto {
     private Date createAt;
 
     @ApiModelProperty(value = "创建人")
-    private String createBy;
+    private Integer createBy;
 
     @ApiModelProperty(value = "更新时间")
     private Date updateAt;
 
     @ApiModelProperty(value = "更新人")
-    private String updateBy;
+    private Integer updateBy;
 }

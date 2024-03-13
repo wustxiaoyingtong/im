@@ -27,6 +27,12 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
                 case CONNECTION:
                     ConnectionHandler.execute(ctx, command);
                     break;
+                case DISCONNECTION:
+                    DisConnectionHandler.execute(ctx, command);
+                    break;
+                case CHAT:
+                    ChatHandler.execute(ctx, frame);
+                    break;
                 default:
                     ctx.channel().writeAndFlush(ChatMessageResultUtil.fail("不支持的IM命令"));
             }
