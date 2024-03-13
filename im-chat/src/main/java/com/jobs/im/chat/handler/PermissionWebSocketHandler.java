@@ -10,6 +10,7 @@ import com.alibaba.fastjson2.JSON;
 import com.jobs.im.chat.factory.ChatUserFactory;
 import com.jobs.im.chat.utils.ChatMessageResultUtil;
 import com.jobs.im.core.jwt.JwtUtil;
+import com.jobs.im.core.model.SysUserLogin;
 import com.jobs.im.core.utils.SysUserUtil;
 import com.jobs.im.feign.dto.ReqSysUserFgDto;
 import com.jobs.im.feign.dto.RspSysUserFgDto;
@@ -57,6 +58,11 @@ public class PermissionWebSocketHandler extends SimpleChannelInboundHandler<Text
                 return;
             }
             if (!SysUserUtil.hasUser(user.getUsername())) {
+                login(ctx);
+                return;
+            }
+            SysUserLogin userRedis = SysUserUtil.getUser(user.getUsername());
+            if (!userRedis.getAccessToken().equals(command.getToken())) {
                 login(ctx);
                 return;
             }

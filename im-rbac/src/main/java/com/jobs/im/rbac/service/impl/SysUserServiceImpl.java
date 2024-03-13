@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.jobs.im.core.enu.ApiCodeEnum;
 import com.jobs.im.core.jwt.JwtUtil;
 import com.jobs.im.core.model.PageInfo;
+import com.jobs.im.core.model.SysUserLogin;
 import com.jobs.im.core.utils.Assert;
 import com.jobs.im.core.utils.BeanMapperUtil;
 import com.jobs.im.core.utils.SysUserUtil;
@@ -102,6 +103,10 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
             return RspAuthenticationInfo.builder().success(false).message("凭证账户不存在").build();
         }
         if (!SysUserUtil.hasUser(userName)) {
+            return RspAuthenticationInfo.builder().success(false).message("账号已经登出").build();
+        }
+        SysUserLogin user = SysUserUtil.getUser(userName);
+        if (!user.getAccessToken().equals(accessToken)) {
             return RspAuthenticationInfo.builder().success(false).message("账号已经登出").build();
         }
         SysUser sysUser = sysUsers.stream().findFirst().get();
