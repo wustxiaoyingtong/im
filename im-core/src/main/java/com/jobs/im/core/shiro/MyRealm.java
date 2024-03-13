@@ -29,14 +29,13 @@ import com.jobs.im.feign.dto.RspAuthenticationInfo;
  * @create: 2024-02-23 10:58
  * @Version 1.0
  **/
-@ConditionalOnBean({CredentialsMatcher.class, ShiroCacheManagerService.class, FeignBeanAgent.class})
+@ConditionalOnBean({CredentialsMatcher.class, FeignBeanAgent.class})
 @Component("myRealm")
 public class MyRealm extends AuthorizingRealm {
     @Autowired
     private RbacApiClient rbacApiClient;
 
-    public MyRealm(@Qualifier("credentialsMatcher") CredentialsMatcher credentialsMatcher,
-        @Qualifier("shiroCacheManagerService") ShiroCacheManagerService shiroCacheManagerService) {
+    public MyRealm(@Qualifier("credentialsMatcher") CredentialsMatcher credentialsMatcher) {
         super();
         this.setCredentialsMatcher(credentialsMatcher);
         this.setCachingEnabled(true);
@@ -44,8 +43,6 @@ public class MyRealm extends AuthorizingRealm {
         this.setAuthenticationCachingEnabled(true);
         // 不缓存 权限信息 换成在service 层控制缓存
         this.setAuthorizationCachingEnabled(false);
-        // 自定义缓存实现 使用redis
-        this.setCacheManager(shiroCacheManagerService);
         this.setAuthenticationCacheName("authenticationCache");
         this.setAuthorizationCacheName("authorizationCache");
     }
