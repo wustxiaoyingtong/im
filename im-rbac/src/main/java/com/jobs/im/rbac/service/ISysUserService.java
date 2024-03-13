@@ -15,5 +15,9 @@ import com.jobs.im.model.service.BaseService;
 public interface ISysUserService extends BaseService<SysUser, ReqSysUserDto> {
     SysUser getUser(ReqSysUserDto reqDto);
 
+    int changePasswd(ReqSysUserDto reqDto);
+
+    int resetPasswd(ReqSysUserDto reqDto);
+
     RspAuthenticationInfo getAuthenticationInfo(ReqAuthenticationInfo reqAuthenticationInfo);
 }

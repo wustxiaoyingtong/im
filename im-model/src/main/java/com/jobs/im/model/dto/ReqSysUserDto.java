@@ -3,9 +3,11 @@ package com.jobs.im.model.dto;
 import java.util.Date;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.jobs.im.core.model.BaseDto;
 import com.jobs.im.core.valid.SaveValid;
+import com.jobs.im.core.valid.UpdateValid;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -24,7 +26,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReqSysUserDto extends BaseDto {
-
+    @NotNull(message = "主键Id不能为空", groups = UpdateValid.class)
     @ApiModelProperty(value = "主键")
     private Integer id;
 
@@ -65,4 +67,7 @@ public class ReqSysUserDto extends BaseDto {
 
     @ApiModelProperty(value = "更新人")
     private Integer updateBy;
+
+    @ApiModelProperty(value = "密码")
+    private String oldPassword;
 }

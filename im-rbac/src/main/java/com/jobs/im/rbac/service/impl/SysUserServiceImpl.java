@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.jobs.im.core.common.Cst;
+import com.jobs.im.core.context.SysUserContextHolder;
 import com.jobs.im.core.enu.ApiCodeEnum;
+import com.jobs.im.core.exception.ServerException;
 import com.jobs.im.core.jwt.JwtUtil;
 import com.jobs.im.core.model.PageInfo;
 import com.jobs.im.core.model.SysUserLogin;
@@ -56,7 +58,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
     @Override
     public int delete(Serializable id) throws RuntimeException {
         SysUser sysUser = sysUserMapper.selectById(id);
-        Assert.notNull(sysUser, "当前记录不存在");
+        Assert.notNull(sysUser, ApiCodeEnum.ACCOUNT_NOT_EXISTS);
         return sysUserMapper.deleteById(id);
     }
 
@@ -68,7 +70,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
     @Override
     public int update(ReqSysUserDto reqSysUserDto) throws RuntimeException {
         SysUser sysUser = sysUserMapper.selectById(reqSysUserDto.getId());
-        Assert.notNull(sysUser, "当前记录不存在");
+        Assert.notNull(sysUser, ApiCodeEnum.ACCOUNT_NOT_EXISTS);
         return sysUserMapper.updateById(BeanMapperUtil.map(reqSysUserDto, SysUser.class));
     }
 
@@ -90,6 +92,29 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
             .eq(!Objects.isNull(reqDto.getUid()), SysUser::getUid, reqDto.getUid()));
         Assert.isTrue(CollectionUtils.isNotEmpty(sysUsers), ApiCodeEnum.ACCOUNT_NOT_EXISTS);
         return sysUsers.stream().findFirst().get();
+    }
+
+    @Override
+    public int changePasswd(ReqSysUserDto reqDto) {
+        Assert.notNull(reqDto.getOldPassword(), ApiCodeEnum.UPDATE_PASSWD_OLD_MISS);
+        Assert.notNull(reqDto.getPassword(), ApiCodeEnum.UPDATE_PASSWD_NEW_MISS);
+        SysUser sysUser = detail(reqDto.getId());
+        Assert.notNull(sysUser, ApiCodeEnum.ACCOUNT_NOT_EXISTS);
+        if (!SysUserContextHolder.getUserId().equals(sysUser.getId())) {
+            throw new ServerException(ApiCodeEnum.UPDATE_PASSWD_DENY);
+        }
+        if (!PasswordEncoderUtil.matches(reqDto.getOldPassword(), sysUser.getPassword())) {
+            throw new ServerException(ApiCodeEnum.ACCOUNT_PWD_ERROR);
+        }
+        SysUser updateUser = BeanMapperUtil.map(reqDto, SysUser.class);
+        updateUser.setPassword(PasswordEncoderUtil.encode(reqDto.getPassword()));
+        return sysUserMapper.updateById(updateUser);
+    }
+
+    @Override
+    public int resetPasswd(ReqSysUserDto reqDto) {
+        reqDto.setPassword(PasswordEncoderUtil.encode(Cst.PASSWD_DEFAULT));
+        return update(reqDto);
     }
 
     @Override

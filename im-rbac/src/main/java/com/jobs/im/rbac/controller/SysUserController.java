@@ -106,4 +106,36 @@ public class SysUserController {
     public ApiResult query(@Validated({QueryValid.class, PageValid.class}) @RequestBody ReqSysUserDto reqDto) {
         return ApiResult.success(sysUserService.queryPage(reqDto));
     }
+
+    /**
+     * Description: 系统用户表-修改密码
+     * 
+     * @param reqDto
+     * @return ApiResult
+     * @throws
+     * @author Author
+     * @date 2024/3/13 18:10
+     **/
+    @ApiOperation(value = "系统用户表-修改密码")
+    @PostMapping(value = "/changePwd", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResult changePwd(@Validated(UpdateValid.class) @RequestBody ReqSysUserDto reqDto) {
+        sysUserService.changePasswd(reqDto);
+        return ApiResult.success();
+    }
+
+    /**
+     * Description: 系统用户表-重置密码
+     *
+     * @param reqDto
+     * @return ApiResult
+     * @throws
+     * @author Author
+     * @date 2024/3/13 18:25
+     **/
+    @ApiOperation(value = "系统用户表-重置密码")
+    @PostMapping(value = "/resetPwd", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResult resetPwd(@Validated(UpdateValid.class) @RequestBody ReqSysUserDto reqDto) {
+        sysUserService.resetPasswd(reqDto);
+        return ApiResult.success();
+    }
 }
