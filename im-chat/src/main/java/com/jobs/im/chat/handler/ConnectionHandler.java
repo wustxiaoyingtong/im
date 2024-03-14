@@ -17,6 +17,6 @@ import io.netty.channel.ChannelHandlerContext;
 public final class ConnectionHandler {
     public static void execute(ChannelHandlerContext ctx, ChatCommand command) {
         ChatUserFactory.putChannel(command.getUid(), ctx.channel());
-        ctx.channel().writeAndFlush(ChatMessageResultUtil.success("已与服务器连接成功"));
+        ctx.channel().writeAndFlush(ChatMessageResultUtil.success("上线成功"));
     }
 }
