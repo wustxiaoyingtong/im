@@ -1,8 +1,11 @@
 package com.jobs.im.feign.client;
 
+import javax.validation.Valid;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.jobs.im.feign.client.fallback.RbacApiClientFallbackFactory;
 import com.jobs.im.feign.common.Cst;
@@ -22,8 +25,8 @@ import com.jobs.im.feign.dto.RspSysUserFgDto;
 @FeignClient(name = Cst.IM_RBAC, path = Cst.IM_RBAC, fallbackFactory = RbacApiClientFallbackFactory.class)
 public interface RbacApiClient {
     @PostMapping(value = "/feign/getAuthenticationInfo", produces = MediaType.APPLICATION_JSON_VALUE)
-    RspAuthenticationInfo getAuthenticationInfo(ReqAuthenticationInfo reqAuthenticationInfo);
+    RspAuthenticationInfo getAuthenticationInfo(@Valid @RequestBody ReqAuthenticationInfo reqAuthenticationInfo);
 
     @PostMapping(value = "/feign/getUser", produces = MediaType.APPLICATION_JSON_VALUE)
-    RspSysUserFgDto getUser(ReqSysUserFgDto req);
+    RspSysUserFgDto getUser(@Valid @RequestBody ReqSysUserFgDto req);
 }

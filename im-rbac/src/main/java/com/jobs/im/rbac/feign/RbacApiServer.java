@@ -41,7 +41,7 @@ public class RbacApiServer implements RbacApiClient {
 
     @Override
     @PostMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RspSysUserFgDto getUser(ReqSysUserFgDto req) {
+    public RspSysUserFgDto getUser(@Valid @RequestBody ReqSysUserFgDto req) {
         return BeanMapperUtil.map(sysUserService.getUser(BeanMapperUtil.map(req, ReqSysUserDto.class)),
             RspSysUserFgDto.class);
     }

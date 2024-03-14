@@ -28,10 +28,12 @@ public final class ChatPrivateHandler {
         RspSysUserFgDto user = ChatUserFactory.getUser(ReqSysUserFgDto.builder().uid(message.getTarget()).build());
         if (Objects.isNull(user)) {
             ctx.channel().writeAndFlush(ChatMessageResultUtil.fail("消息发送失败，发送对象不存在"));
+            return;
         }
         Channel channel = ChatUserFactory.getChannel(message.getTarget());
         if (Objects.isNull(channel) || !channel.isActive()) {
             ctx.channel().writeAndFlush(ChatMessageResultUtil.fail("消息发送失败，对方" + user.getNickname() + "不在线"));
+            return;
         }
         RspSysUserFgDto self = ChatUserFactory.getUser(ReqSysUserFgDto.builder().uid(message.getUid()).build());
         channel
