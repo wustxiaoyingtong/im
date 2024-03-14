@@ -59,6 +59,9 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
     public int delete(Serializable id) throws RuntimeException {
         SysUser sysUser = sysUserMapper.selectById(id);
         Assert.notNull(sysUser, ApiCodeEnum.ACCOUNT_NOT_EXISTS);
+        if (sysUser.getUsername().equals(Cst.ADMIN)) {
+            return 0;
+        }
         return sysUserMapper.deleteById(id);
     }
 
@@ -71,6 +74,12 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
     public int update(ReqSysUserDto reqSysUserDto) throws RuntimeException {
         SysUser sysUser = sysUserMapper.selectById(reqSysUserDto.getId());
         Assert.notNull(sysUser, ApiCodeEnum.ACCOUNT_NOT_EXISTS);
+        if (sysUser.getUsername().equals(Cst.ADMIN)) {
+            reqSysUserDto.setUsername(Cst.ADMIN);
+            reqSysUserDto.setIsDisabled(SysUserStatus.SYS_USER_IS_ENABLED.value);
+            reqSysUserDto.setUid(sysUser.getUid());
+            reqSysUserDto.setPassword(sysUser.getPassword());
+        }
         return sysUserMapper.updateById(BeanMapperUtil.map(reqSysUserDto, SysUser.class));
     }
 
@@ -100,6 +109,9 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
         Assert.notNull(reqDto.getPassword(), ApiCodeEnum.UPDATE_PASSWD_NEW_MISS);
         SysUser sysUser = detail(reqDto.getId());
         Assert.notNull(sysUser, ApiCodeEnum.ACCOUNT_NOT_EXISTS);
+        if (sysUser.getUsername().equals(Cst.ADMIN)) {
+            return 0;
+        }
         if (!SysUserContextHolder.getUserId().equals(sysUser.getId())) {
             throw new ServerException(ApiCodeEnum.UPDATE_PASSWD_DENY);
         }
