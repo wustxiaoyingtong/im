@@ -1,5 +1,6 @@
 package com.jobs.im.chat.handler;
 
+import java.util.Date;
 import java.util.Objects;
 
 import com.jobs.im.chat.factory.ChatUserFactory;
@@ -7,6 +8,8 @@ import com.jobs.im.chat.utils.ChatMessageResultUtil;
 import com.jobs.im.feign.dto.ReqSysUserFgDto;
 import com.jobs.im.feign.dto.RspSysUserFgDto;
 import com.jobs.im.model.bean.ChatMessage;
+import com.jobs.im.model.bean.ChatMessageResult;
+import com.jobs.im.model.enu.ChatMessageType;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -36,7 +39,9 @@ public final class ChatPrivateHandler {
             return;
         }
         RspSysUserFgDto self = ChatUserFactory.getUser(ReqSysUserFgDto.builder().uid(message.getUid()).build());
-        channel
-            .writeAndFlush(ChatMessageResultUtil.success(self.getUsername(), self.getNickname(), message.getContent()));
+        ChatMessageResult result = ChatMessageResult.builder().uid(self.getUid()).name(self.getUsername())
+            .nickName(self.getNickname()).type(ChatMessageType.PRIVATE.type).target(user.getUid())
+            .targetName(user.getNickname()).content(message.getContent()).time(new Date()).build();
+        channel.writeAndFlush(ChatMessageResultUtil.success(result));
     }
 }

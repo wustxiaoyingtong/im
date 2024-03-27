@@ -23,13 +23,13 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 /**
  * @program: im
- * @ClassName: ChatGroupHandler
+ * @ClassName: ChatNoticeHandler
  * @description:
  * @author: Author
- * @create: 2024-03-13 15:00
+ * @create: 2024-03-25 11:34
  * @Version 1.0
  **/
-public final class ChatGroupHandler {
+public final class ChatNoticeHandler {
     public static void execute(ChannelHandlerContext ctx, ChatMessage message) {
         if (Objects.isNull(message.getTarget())) {
             ctx.channel().writeAndFlush(ChatMessageResultUtil.fail("消息发送失败，请确认发送群聊对象"));
@@ -62,7 +62,7 @@ public final class ChatGroupHandler {
             channels.add(channel);
         });
         ChatMessageResult result = ChatMessageResult.builder().uid(self.getUid()).name(self.getUsername())
-            .nickName(self.getNickname()).type(ChatMessageType.GROUP.type).target(vo.getUid()).targetName(vo.getName())
+            .nickName(self.getNickname()).type(ChatMessageType.NOTICE.type).target(vo.getUid()).targetName(vo.getName())
             .content(message.getContent()).time(new Date()).build();
         channels.writeAndFlush(ChatMessageResultUtil.success(result));
     }

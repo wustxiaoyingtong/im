@@ -1,6 +1,6 @@
 package com.jobs.im.model.bean;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,11 +20,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatMessageResult {
+    // 发送人uid
+    Long uid;
+
+    // 发送人name
     String name;
 
+    // 发送人昵称
     String nickName;
 
-    LocalDateTime time;
+    // 消息类型
+    Integer type;
 
-    String message;
+    // 消息发送对象，私聊或群聊
+    Long target;
+
+    // 发送对象名称
+    String targetName;
+
+    // 消息内容
+    String content;
+
+    // 发送时间
+    Date time;
 }

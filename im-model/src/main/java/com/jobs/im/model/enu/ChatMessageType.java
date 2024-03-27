@@ -16,7 +16,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ChatMessageType {
-    PRIVATE(1, "私聊"), GROUP(2, "群聊"), ERROR(-1, "不支持的类型");
+    SYSTEM(0, "系统"), PRIVATE(1, "私聊"), GROUP(2, "群聊"), NOTICE(3, "通知"), ERROR(-1, "不支持的类型");
 
     public Integer type;
 

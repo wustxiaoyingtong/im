@@ -1,5 +1,7 @@
 package com.jobs.im.rbac.feign;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import com.jobs.im.feign.dto.ReqAuthenticationInfo;
 import com.jobs.im.feign.dto.ReqSysUserFgDto;
 import com.jobs.im.feign.dto.RspAuthenticationInfo;
 import com.jobs.im.feign.dto.RspSysUserFgDto;
+import com.jobs.im.model.bean.SysUser;
 import com.jobs.im.model.dto.ReqSysUserDto;
 import com.jobs.im.rbac.service.ISysUserService;
 
@@ -42,7 +45,7 @@ public class RbacApiServer implements RbacApiClient {
     @Override
     @PostMapping(value = "/getUser", produces = MediaType.APPLICATION_JSON_VALUE)
     public RspSysUserFgDto getUser(@Valid @RequestBody ReqSysUserFgDto req) {
-        return BeanMapperUtil.map(sysUserService.getUser(BeanMapperUtil.map(req, ReqSysUserDto.class)),
-            RspSysUserFgDto.class);
+        SysUser user = sysUserService.getUser(BeanMapperUtil.map(req, ReqSysUserDto.class));
+        return Optional.ofNullable(user).map(u -> BeanMapperUtil.map(u, RspSysUserFgDto.class)).orElse(null);
     }
 }
