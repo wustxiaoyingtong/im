@@ -168,4 +168,8 @@ public class SnowFlake {
     private long getCurrentTimestamp() {
         return System.currentTimeMillis();
     }
+
+    public static void main(String[] args) {
+        System.out.println(SnowFlake.init(1, 1).nextId());
+    }
 }
