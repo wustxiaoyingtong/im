@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.jobs.im.core.model.SysUserLogin;
+import com.jobs.im.model.dto.ReqSysUserDto;
 import com.jobs.im.model.dto.ReqSysUserLoginDto;
 
 /**
@@ -19,4 +20,6 @@ public interface ISysUserLoginService {
     SysUserLogin login(ReqSysUserLoginDto reqDto) throws UnsupportedEncodingException;
 
     void logout(HttpServletRequest request);
+
+    void signUp(ReqSysUserDto reqDto);
 }

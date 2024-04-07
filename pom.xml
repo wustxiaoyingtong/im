@@ -37,6 +37,7 @@
         <module>im-model</module>
         <module>im-gateway</module>
         <module>im-feign</module>
+        <module>im-file</module>
         <module>im-rbac</module>
         <module>im-chat</module>
     </modules>

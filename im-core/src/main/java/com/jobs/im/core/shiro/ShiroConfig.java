@@ -70,8 +70,10 @@ public class ShiroConfig {
         filterRuleMap.put("/webjars/**", "anon");
         filterRuleMap.put("/v2/**", "anon");
         filterRuleMap.put("/swagger-resources/**", "anon");
-        // 登录
+        // 登录，注册，注册头像文件上传
         filterRuleMap.put("/sys/login", "anon");
+        filterRuleMap.put("/sys/signUp", "anon");
+        filterRuleMap.put("/file/signUpLogo", "anon");
         // feign
         filterRuleMap.put("/feign/**", "anon");
         // health

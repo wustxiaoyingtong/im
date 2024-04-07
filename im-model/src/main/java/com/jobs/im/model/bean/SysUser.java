@@ -51,6 +51,12 @@ public class SysUser implements Serializable {
     private String nickname;
 
     /**
+     * 头像文件uid
+     **/
+    @TableField(value = "pic")
+    private Long pic;
+
+    /**
      * 邮箱
      **/
     @TableField(value = "email")

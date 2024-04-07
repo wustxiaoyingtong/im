@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jobs.im.core.exception.ServerException;
 import com.jobs.im.core.model.ApiResult;
+import com.jobs.im.core.valid.SaveValid;
+import com.jobs.im.model.dto.ReqSysUserDto;
 import com.jobs.im.model.dto.ReqSysUserLoginDto;
 import com.jobs.im.rbac.service.ISysUserLoginService;
 
@@ -34,6 +37,13 @@ import io.swagger.annotations.ApiOperation;
 public class LoginController {
     @Autowired
     private ISysUserLoginService sysUserLoginService;
+
+    @ApiOperation(value = "注册")
+    @PostMapping(value = "/signUp", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResult signUp(@Validated(SaveValid.class) @RequestBody ReqSysUserDto reqDto) {
+        sysUserLoginService.signUp(reqDto);
+        return ApiResult.success();
+    }
 
     @ApiOperation(value = "登录")
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)

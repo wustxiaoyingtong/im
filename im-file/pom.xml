@@ -12,7 +12,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>im-chat</artifactId>
+    <artifactId>im-file</artifactId>
 
     <!-- 依赖项 -->
     <dependencies>
@@ -48,11 +48,11 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.3.0</version>
         </dependency>
-        <!-- netty-->
+        <!-- minio sdk -->
         <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>4.1.85.Final</version>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>6.0.8</version>
         </dependency>
     </dependencies>
 
@@ -64,7 +64,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.2.5.RELEASE</version>
                 <configuration>
-                    <mainClass>com.jobs.im.chat.ChatServer</mainClass>
+                    <mainClass>com.jobs.im.file.FileServer</mainClass>
                 </configuration>
                 <executions>
                     <execution>

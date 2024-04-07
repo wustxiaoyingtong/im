@@ -11,6 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.jobs.im.core.common.Cst;
 import com.jobs.im.core.config.RedisService;
@@ -18,10 +19,12 @@ import com.jobs.im.core.enu.ApiCodeEnum;
 import com.jobs.im.core.exception.ServerException;
 import com.jobs.im.core.jwt.JwtUtil;
 import com.jobs.im.core.model.SysUserLogin;
+import com.jobs.im.core.snowflake.SnowFlake;
 import com.jobs.im.core.utils.Assert;
 import com.jobs.im.core.utils.BeanMapperUtil;
 import com.jobs.im.core.utils.PasswordEncoderUtil;
 import com.jobs.im.model.bean.SysUser;
+import com.jobs.im.model.dto.ReqSysUserDto;
 import com.jobs.im.model.dto.ReqSysUserLoginDto;
 import com.jobs.im.model.enu.SysUserStatus;
 import com.jobs.im.rbac.dao.SysUserMapper;
@@ -77,5 +80,17 @@ public class SysUserLoginServiceImpl implements ISysUserLoginService {
         Assert.isTrue(CollectionUtils.isNotEmpty(sysUsers), ApiCodeEnum.TOKEN_EXPIRE);
         SysUser sysUserDb = sysUsers.stream().findFirst().get();
         redisService.delete(String.format(Cst.REDIS_KEY_SYS_USER, sysUserDb.getUsername()));
+    }
+
+    @Override
+    public void signUp(ReqSysUserDto reqDto) throws RuntimeException {
+        Assert.isTrue(StringUtils.isNotBlank(reqDto.getPassword()), ApiCodeEnum.PARAM_ERROR);
+        List<SysUser> list =
+            sysUserMapper.selectList(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, reqDto.getUsername()));
+        Assert.isTrue(CollectionUtils.isEmpty(list), ApiCodeEnum.USERNAME_DUPLICATED);
+        reqDto.setUid(SnowFlake.next());
+        reqDto.setPassword(PasswordEncoderUtil.encode(reqDto.getPassword()));
+        reqDto.setIsDisabled(SysUserStatus.SYS_USER_IS_ENABLED.value);
+        sysUserMapper.insert(BeanMapperUtil.map(reqDto, SysUser.class));
     }
 }
