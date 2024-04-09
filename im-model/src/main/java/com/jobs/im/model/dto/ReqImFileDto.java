@@ -41,6 +41,9 @@ public class ReqImFileDto extends BaseDto {
     @ApiModelProperty(value = "文件名")
     private String name;
 
+    @ApiModelProperty(value = "文件服务器文件名路径")
+    private String remoteName;
+
     @ApiModelProperty(value = "创建时间")
     private Date createAt;
 

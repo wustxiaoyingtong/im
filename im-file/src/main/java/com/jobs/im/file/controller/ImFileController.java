@@ -1,5 +1,7 @@
 package com.jobs.im.file.controller;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -154,5 +156,11 @@ public class ImFileController {
     public ApiResult upload(@ApiParam(value = "文件", required = true) @RequestParam("file") MultipartFile file)
         throws Exception {
         return ApiResult.success(imFileService.upload(file));
+    }
+
+    @ApiOperation(value = "文件预览")
+    @GetMapping(value = "/pre/{uid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void pre(@PathVariable("uid") Long uid, HttpServletResponse response) {
+        imFileService.pre(uid, response);
     }
 }

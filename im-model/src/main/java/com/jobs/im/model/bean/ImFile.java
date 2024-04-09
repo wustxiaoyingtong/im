@@ -42,6 +42,12 @@ public class ImFile implements Serializable {
     private String name;
 
     /**
+     * 文件服务器文件名路径
+     **/
+    @TableField(value = "remote_name")
+    private String remoteName;
+
+    /**
      * 创建时间
      **/
     @TableField(value = "create_at")

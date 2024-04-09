@@ -74,6 +74,7 @@ public class ShiroConfig {
         filterRuleMap.put("/sys/login", "anon");
         filterRuleMap.put("/sys/signUp", "anon");
         filterRuleMap.put("/file/signUpLogo", "anon");
+        filterRuleMap.put("/file/pre/**", "anon");
         // feign
         filterRuleMap.put("/feign/**", "anon");
         // health

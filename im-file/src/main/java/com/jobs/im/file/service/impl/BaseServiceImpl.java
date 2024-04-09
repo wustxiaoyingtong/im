@@ -9,6 +9,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -29,6 +31,8 @@ import com.jobs.im.core.utils.Assert;
  * @Version 1.0
  **/
 public abstract class BaseServiceImpl {
+    protected Logger log = LoggerFactory.getLogger(this.getClass());
+
     /**
      * Description: 公共分页查询-单表
      *

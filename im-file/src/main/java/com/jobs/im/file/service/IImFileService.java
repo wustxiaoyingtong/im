@@ -1,5 +1,7 @@
 package com.jobs.im.file.service;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jobs.im.model.bean.ImFile;
@@ -19,4 +21,6 @@ public interface IImFileService extends BaseService<ImFile, ReqImFileDto> {
     RespImFileDto upload(MultipartFile file) throws Exception;
 
     RespImFileDto signUpLogo(MultipartFile file) throws Exception;
+
+    void pre(Long uid, HttpServletResponse response);
 }

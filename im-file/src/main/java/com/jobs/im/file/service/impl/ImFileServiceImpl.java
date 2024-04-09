@@ -1,10 +1,13 @@
 package com.jobs.im.file.service.impl;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,7 +112,8 @@ public class ImFileServiceImpl extends BaseServiceImpl implements IImFileService
         String objectName = new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "/" + id + suffix;
         minioClient.putObject(bucketName, objectName, file.getInputStream(), file.getContentType());
         String fileName = id + suffix;
-        ReqImFileDto fileDto = ReqImFileDto.builder().uid(id).originalName(original).name(fileName).build();
+        ReqImFileDto fileDto =
+            ReqImFileDto.builder().uid(id).originalName(original).name(fileName).remoteName(objectName).build();
         ImFile addFile = BeanMapperUtil.map(fileDto, ImFile.class);
         imFileMapper.insert(addFile);
         return BeanMapperUtil.map(addFile, RespImFileDto.class);
@@ -118,5 +122,25 @@ public class ImFileServiceImpl extends BaseServiceImpl implements IImFileService
     @Override
     public RespImFileDto signUpLogo(MultipartFile file) throws Exception {
         return upload(file);
+    }
+
+    @Override
+    public void pre(Long uid, HttpServletResponse response) {
+        ImFile imFile = queryOne(ReqImFileDto.builder().uid(uid).build());
+        if (Objects.isNull(imFile)) {
+            return;
+        }
+        log.info("pre pic start");
+        try (InputStream object = minioClient.getObject(bucketName, imFile.getRemoteName());
+            ServletOutputStream os = response.getOutputStream()) {
+            byte[] b = new byte[1024];
+            int len;
+            while ((len = object.read(b)) != -1) {
+                os.write(b, 0, len);
+            }
+            os.flush();
+        } catch (Exception e) {
+            log.error("pre pic error", e);
+        }
     }
 }
