@@ -108,6 +108,21 @@ public class SysUserController {
     }
 
     /**
+     * Description: 系统用户表-查询单个用户
+     *
+     * @param reqDto
+     * @return ApiResult
+     * @throws
+     * @author Author
+     * @date 2024/4/9 18:09
+     **/
+    @ApiOperation(value = "系统用户表-查询单个用户")
+    @PostMapping(value = "/queryInfo", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResult queryInfo(@Validated @RequestBody ReqSysUserDto reqDto) {
+        return ApiResult.success(sysUserService.getUser(reqDto));
+    }
+
+    /**
      * Description: 系统用户表-修改密码
      * 
      * @param reqDto

@@ -37,7 +37,7 @@ public class PermissionWebSocketHandler extends SimpleChannelInboundHandler<Text
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) throws Exception {
         try {
             ChatCommand command = JSON.parseObject(frame.text(), ChatCommand.class);
-            if (StringUtils.isBlank(command.getToken()) || Objects.isNull(command.getUid())) {
+            if (StringUtils.isBlank(command.getToken()) || StringUtils.isBlank(command.getUid())) {
                 login(ctx);
                 return;
             }

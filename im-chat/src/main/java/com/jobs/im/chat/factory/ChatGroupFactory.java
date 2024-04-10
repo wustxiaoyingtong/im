@@ -24,7 +24,7 @@ import com.jobs.im.model.vo.ImChatGroupVo;
  * @Version 1.0
  **/
 public final class ChatGroupFactory {
-    public static ImChatGroupVo getGroup(Long uid) {
+    public static ImChatGroupVo getGroup(String uid) {
         ImChatGroupServiceImpl imChatGroupService = SpringContextHolder.getBean("imChatGroupServiceImpl");
         ImChatGroup detail = Optional.ofNullable(imChatGroupService.query(ReqImChatGroupDto.builder().uid(uid).build()))
             .map(Collection::stream).map(s -> s.findFirst()).map(s -> s.orElse(null)).orElse(null);

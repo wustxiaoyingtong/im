@@ -30,7 +30,7 @@ public class SysUser implements Serializable {
      * uid
      **/
     @TableId(value = "uid")
-    private Long uid;
+    private String uid;
 
     /**
      * 账户

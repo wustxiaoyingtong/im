@@ -31,7 +31,7 @@ public class ReqImChatGroupDto extends BaseDto {
     private Integer id;
 
     @ApiModelProperty(value = "uid")
-    private Long uid;
+    private String uid;
 
     @NotEmpty(message = "群组名不能为空", groups = SaveValid.class)
     @ApiModelProperty(value = "群组名")

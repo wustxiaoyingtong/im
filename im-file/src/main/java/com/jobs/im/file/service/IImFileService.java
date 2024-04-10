@@ -22,5 +22,5 @@ public interface IImFileService extends BaseService<ImFile, ReqImFileDto> {
 
     RespImFileDto signUpLogo(MultipartFile file) throws Exception;
 
-    void pre(Long uid, HttpServletResponse response);
+    void pre(String uid, HttpServletResponse response);
 }

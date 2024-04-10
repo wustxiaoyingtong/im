@@ -27,7 +27,7 @@ public class ImFile implements Serializable {
     private Integer id;
 
     @TableId(value = "uid", type = IdType.AUTO)
-    private Long uid;
+    private String uid;
 
     /**
      * 文件原始名

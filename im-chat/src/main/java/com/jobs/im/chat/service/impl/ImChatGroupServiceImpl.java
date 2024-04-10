@@ -2,11 +2,11 @@ package com.jobs.im.chat.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -83,6 +83,6 @@ public class ImChatGroupServiceImpl extends BaseServiceImpl implements IImChatGr
     @Override
     public List<ImChatGroup> query(ReqImChatGroupDto reqImChatGroupDto) {
         return imChatGroupMapper.selectList(Wrappers.<ImChatGroup>lambdaQuery()
-            .eq(!Objects.isNull(reqImChatGroupDto.getUid()), ImChatGroup::getUid, reqImChatGroupDto.getUid()));
+            .eq(StringUtils.isNotBlank(reqImChatGroupDto.getUid()), ImChatGroup::getUid, reqImChatGroupDto.getUid()));
     }
 }

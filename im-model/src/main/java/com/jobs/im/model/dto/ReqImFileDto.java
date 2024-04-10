@@ -30,9 +30,9 @@ public class ReqImFileDto extends BaseDto {
     @ApiModelProperty(value = "主键")
     private Integer id;
 
-    @NotNull(message = "uid不能为空", groups = SaveValid.class)
+    @NotEmpty(message = "uid不能为空", groups = SaveValid.class)
     @ApiModelProperty(value = "uid")
-    private Long uid;
+    private String uid;
 
     @ApiModelProperty(value = "文件原始名")
     private String originalName;

@@ -26,7 +26,7 @@ public class RespImFileDto implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "uid")
-    private Long uid;
+    private String uid;
 
     @ApiModelProperty(value = "文件原始名")
     private String originalName;

@@ -27,7 +27,7 @@ public class RspSysUserFgDto implements Serializable {
     /**
      * uid
      **/
-    private Long uid;
+    private String uid;
 
     /**
      * 账户

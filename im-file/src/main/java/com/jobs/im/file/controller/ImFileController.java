@@ -122,7 +122,7 @@ public class ImFileController {
      **/
     @ApiOperation(value = "文件信息表-根据UID查询")
     @PostMapping(value = "/get/{uid}")
-    public ApiResult detail(@PathVariable("uid") Long uid) {
+    public ApiResult detail(@PathVariable("uid") String uid) {
         return ApiResult.success(imFileService.queryOne(ReqImFileDto.builder().uid(uid).build()));
     }
 
@@ -160,7 +160,7 @@ public class ImFileController {
 
     @ApiOperation(value = "文件预览")
     @GetMapping(value = "/pre/{uid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void pre(@PathVariable("uid") Long uid, HttpServletResponse response) {
+    public void pre(@PathVariable("uid") String uid, HttpServletResponse response) {
         imFileService.pre(uid, response);
     }
 }

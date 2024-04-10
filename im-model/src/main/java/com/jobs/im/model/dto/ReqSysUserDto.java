@@ -31,7 +31,7 @@ public class ReqSysUserDto extends BaseDto {
     private Integer id;
 
     @ApiModelProperty(value = "uid")
-    private Long uid;
+    private String uid;
 
     @NotEmpty(message = "账户不能为空", groups = SaveValid.class)
     @ApiModelProperty(value = "账户")

@@ -83,7 +83,7 @@ public class ImFileServiceImpl extends BaseServiceImpl implements IImFileService
     public List<ImFile> query(ReqImFileDto reqImFileDto) {
         return imFileMapper.selectList(Wrappers.<ImFile>lambdaQuery()
             .eq(!Objects.isNull(reqImFileDto.getCreateBy()), ImFile::getCreateBy, reqImFileDto.getCreateBy())
-            .eq(!Objects.isNull(reqImFileDto.getUid()), ImFile::getUid, reqImFileDto.getUid())
+            .eq(StringUtils.isNotBlank(reqImFileDto.getUid()), ImFile::getUid, reqImFileDto.getUid())
             .eq(!Objects.isNull(reqImFileDto.getId()), ImFile::getId, reqImFileDto.getId())
             .eq(StringUtils.isNotBlank(reqImFileDto.getName()), ImFile::getName, reqImFileDto.getName())
             .orderByDesc(ImFile::getCreateAt));
@@ -93,7 +93,7 @@ public class ImFileServiceImpl extends BaseServiceImpl implements IImFileService
     public ImFile queryOne(ReqImFileDto reqImFileDto) {
         List<ImFile> imFiles = imFileMapper.selectList(Wrappers.<ImFile>lambdaQuery()
             .eq(!Objects.isNull(reqImFileDto.getCreateBy()), ImFile::getCreateBy, reqImFileDto.getCreateBy())
-            .eq(!Objects.isNull(reqImFileDto.getUid()), ImFile::getUid, reqImFileDto.getUid())
+            .eq(StringUtils.isNotBlank(reqImFileDto.getUid()), ImFile::getUid, reqImFileDto.getUid())
             .eq(!Objects.isNull(reqImFileDto.getId()), ImFile::getId, reqImFileDto.getId())
             .eq(StringUtils.isNotBlank(reqImFileDto.getName()), ImFile::getName, reqImFileDto.getName())
             .orderByDesc(ImFile::getCreateAt));
@@ -108,7 +108,7 @@ public class ImFileServiceImpl extends BaseServiceImpl implements IImFileService
             throw new ServerException(ApiCodeEnum.FILE_ORIGINAL_NAME_TOO_LONG);
         }
         String suffix = original.substring(original.lastIndexOf("."));
-        long id = SnowFlake.next();
+        String id = SnowFlake.next();
         String objectName = new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "/" + id + suffix;
         minioClient.putObject(bucketName, objectName, file.getInputStream(), file.getContentType());
         String fileName = id + suffix;
@@ -125,12 +125,11 @@ public class ImFileServiceImpl extends BaseServiceImpl implements IImFileService
     }
 
     @Override
-    public void pre(Long uid, HttpServletResponse response) {
+    public void pre(String uid, HttpServletResponse response) {
         ImFile imFile = queryOne(ReqImFileDto.builder().uid(uid).build());
         if (Objects.isNull(imFile)) {
             return;
         }
-        log.info("pre pic start");
         try (InputStream object = minioClient.getObject(bucketName, imFile.getRemoteName());
             ServletOutputStream os = response.getOutputStream()) {
             byte[] b = new byte[1024];

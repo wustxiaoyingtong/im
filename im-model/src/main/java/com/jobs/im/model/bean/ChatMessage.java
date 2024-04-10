@@ -22,7 +22,7 @@ public class ChatMessage extends ChatCommand {
     Integer type;
 
     // 消息发送对象，私聊或群聊
-    Long target;
+    String target;
 
     // 消息内容
     String content;

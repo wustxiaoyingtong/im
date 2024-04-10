@@ -28,7 +28,7 @@ public class SysUserLogin implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "uid")
-    private Long uid;
+    private String uid;
 
     @ApiModelProperty(value = "用户名")
     private String username;

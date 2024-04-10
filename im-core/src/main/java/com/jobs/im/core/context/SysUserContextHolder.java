@@ -32,7 +32,7 @@ public final class SysUserContextHolder {
         return Optional.ofNullable(getUser()).map(SysUserLogin::getId).orElse(null);
     }
 
-    public static Long getUserUid() {
+    public static String getUserUid() {
         return Optional.ofNullable(getUser()).map(SysUserLogin::getUid).orElse(null);
     }
 

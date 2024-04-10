@@ -140,9 +140,9 @@ public class SnowFlake {
             | machineId << MACHINE_LEFT | sequence;
     }
 
-    public static long next() {
+    public static String next() {
         SnowFlakeBean snowFlakeBean = SpringContextHolder.getBean("snowFlakeBean");
-        return SnowFlake.init(snowFlakeBean.dataCenterId, snowFlakeBean.machineId).nextId();
+        return String.valueOf(SnowFlake.init(snowFlakeBean.dataCenterId, snowFlakeBean.machineId).nextId());
     }
 
     /**

@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 public class ImChatGroupVo implements Serializable {
     private Integer id;
 
-    private Long uid;
+    private String uid;
 
     /**
      * 群组名

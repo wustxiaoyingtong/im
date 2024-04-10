@@ -22,7 +22,7 @@ public class ChatCommand implements Serializable {
     int code;
 
     // 用户uid
-    Long uid;
+    String uid;
 
     // 登录的token
     String token;

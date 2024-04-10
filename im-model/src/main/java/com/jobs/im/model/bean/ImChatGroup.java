@@ -28,7 +28,7 @@ public class ImChatGroup implements Serializable {
     private Integer id;
 
     @TableId(value = "uid")
-    private Long uid;
+    private String uid;
 
     /**
      * 群组名

@@ -27,7 +27,7 @@ public class ReqSysUserFgDto extends BaseDto {
     private Integer id;
 
     @ApiModelProperty(value = "uid")
-    private Long uid;
+    private String uid;
 
     @ApiModelProperty(value = "账户")
     private String username;

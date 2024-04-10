@@ -3,6 +3,8 @@ package com.jobs.im.chat.handler;
 import java.util.Date;
 import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.jobs.im.chat.factory.ChatUserFactory;
 import com.jobs.im.chat.utils.ChatMessageResultUtil;
 import com.jobs.im.feign.dto.ReqSysUserFgDto;
@@ -24,7 +26,7 @@ import io.netty.channel.ChannelHandlerContext;
  **/
 public final class ChatPrivateHandler {
     public static void execute(ChannelHandlerContext ctx, ChatMessage message) {
-        if (Objects.isNull(message.getTarget())) {
+        if (StringUtils.isBlank(message.getTarget())) {
             ctx.channel().writeAndFlush(ChatMessageResultUtil.fail("消息发送失败，请确认发送对象"));
             return;
         }

@@ -67,7 +67,9 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
 
     @Override
     public SysUser detail(Serializable id) throws RuntimeException {
-        return sysUserMapper.selectById(id);
+        SysUser sysUser = sysUserMapper.selectById(id);
+        sysUser.setPassword(null);
+        return sysUser;
     }
 
     @Override
@@ -98,7 +100,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
     public SysUser getUser(ReqSysUserDto reqDto) {
         List<SysUser> sysUsers = sysUserMapper.selectList(Wrappers.<SysUser>lambdaQuery()
             .eq(StringUtils.isNotBlank(reqDto.getUsername()), SysUser::getUsername, reqDto.getUsername())
-            .eq(!Objects.isNull(reqDto.getUid()), SysUser::getUid, reqDto.getUid())
+            .eq(StringUtils.isNotBlank(reqDto.getUid()), SysUser::getUid, reqDto.getUid())
             .eq(!Objects.isNull(reqDto.getId()), SysUser::getId, reqDto.getId()));
         return sysUsers.stream().findFirst().orElse(null);
     }

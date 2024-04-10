@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChatMessageResult {
     // 发送人uid
-    Long uid;
+    String uid;
 
     // 发送人name
     String name;
@@ -33,7 +33,7 @@ public class ChatMessageResult {
     Integer type;
 
     // 消息发送对象，私聊或群聊
-    Long target;
+    String target;
 
     // 发送对象名称
     String targetName;
