@@ -45,7 +45,7 @@ public class ReqSysUserDto extends BaseDto {
     private String nickname;
 
     @ApiModelProperty(value = "头像文件uid")
-    private Long pic;
+    private String pic;
 
     @ApiModelProperty(value = "邮箱")
     private String email;

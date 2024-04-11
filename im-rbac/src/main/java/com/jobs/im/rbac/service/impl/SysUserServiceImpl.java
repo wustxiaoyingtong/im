@@ -78,16 +78,26 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
         Assert.notNull(sysUser, ApiCodeEnum.ACCOUNT_NOT_EXISTS);
         if (sysUser.getUsername().equals(Cst.ADMIN)) {
             reqSysUserDto.setUsername(Cst.ADMIN);
+            reqSysUserDto.setNickname(Cst.ADMIN_NICK);
             reqSysUserDto.setIsDisabled(SysUserStatus.SYS_USER_IS_ENABLED.value);
             reqSysUserDto.setUid(sysUser.getUid());
             reqSysUserDto.setPassword(sysUser.getPassword());
+        }
+        if (!Objects.isNull(reqSysUserDto.getIsDisabled()) && !SysUserContextHolder.getUserName().equals(Cst.ADMIN)
+            && !SysUserContextHolder.getUserId().equals(reqSysUserDto.getId())) {
+            throw new ServerException(ApiCodeEnum.OPERATION_DENY);
         }
         return sysUserMapper.updateById(BeanMapperUtil.map(reqSysUserDto, SysUser.class));
     }
 
     @Override
     public PageInfo<SysUser> queryPage(ReqSysUserDto reqSysUserDto) {
-        LambdaQueryWrapper<SysUser> wrapper = Wrappers.<SysUser>lambdaQuery().orderByDesc(SysUser::getCreateAt);
+        LambdaQueryWrapper<SysUser> wrapper = Wrappers.<SysUser>lambdaQuery()
+            .eq(!Objects.isNull(reqSysUserDto.getIsDisabled()) && reqSysUserDto.getIsDisabled() >= 0,
+                SysUser::getIsDisabled, reqSysUserDto.getIsDisabled())
+            .like(StringUtils.isNotBlank(reqSysUserDto.getNickname()), SysUser::getNickname,
+                reqSysUserDto.getNickname())
+            .orderByDesc(SysUser::getCreateAt);
         return query(sysUserMapper, wrapper, reqSysUserDto);
     }
 
@@ -109,7 +119,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements ISysUserServi
     public int changePasswd(ReqSysUserDto reqDto) {
         Assert.notNull(reqDto.getOldPassword(), ApiCodeEnum.UPDATE_PASSWD_OLD_MISS);
         Assert.notNull(reqDto.getPassword(), ApiCodeEnum.UPDATE_PASSWD_NEW_MISS);
-        SysUser sysUser = detail(reqDto.getId());
+        SysUser sysUser = sysUserMapper.selectById(reqDto.getId());
         Assert.notNull(sysUser, ApiCodeEnum.ACCOUNT_NOT_EXISTS);
         if (sysUser.getUsername().equals(Cst.ADMIN)) {
             return 0;

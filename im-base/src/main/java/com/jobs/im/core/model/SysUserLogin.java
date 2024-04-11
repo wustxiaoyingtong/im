@@ -37,7 +37,7 @@ public class SysUserLogin implements Serializable {
     private String nickname;
 
     @ApiModelProperty(value = "头像")
-    private Long pic;
+    private String pic;
 
     @ApiModelProperty(value = "角色ID")
     private Integer roleId;

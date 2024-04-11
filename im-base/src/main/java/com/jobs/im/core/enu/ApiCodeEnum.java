@@ -21,7 +21,7 @@ public enum ApiCodeEnum {
     UPDATE_PASSWD_OLD_MISS(110006, "update_passwd_old_miss"), UPDATE_PASSWD_NEW_MISS(110007, "update_passwd_new_miss"),
     UPDATE_PASSWD_DENY(110008, "update_passwd_deny"), CHAT_GROUP_NAME_DUPLICATED(110009, "chat_group_name_duplicated"),
     RECORD_EXISTS(110010, "record_exists"), FILE_ORIGINAL_NAME_TOO_LONG(110011, "file_original_name_too_long"),
-    PARAM_ERROR(110012, "param_error");
+    PARAM_ERROR(110012, "param_error"), OPERATION_DENY(110013, "operation_deny");
 
     public int code;
 
