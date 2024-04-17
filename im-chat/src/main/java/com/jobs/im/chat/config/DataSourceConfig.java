@@ -1,5 +1,8 @@
 package com.jobs.im.chat.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -14,7 +17,10 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.handler.TableNameHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.jobs.im.chat.common.Cst;
@@ -74,6 +80,7 @@ public class DataSourceConfig {
         sessionFactory.setGlobalConfig(globalConfig);
         // MybatisPlus分页插件
         MybatisConfiguration configuration = new MybatisConfiguration();
+        configuration.addInterceptor(mybatisPlusInterceptor());
         PaginationInterceptor interceptor = new PaginationInterceptor();
         interceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
         configuration.addInterceptor(interceptor);
@@ -84,5 +91,22 @@ public class DataSourceConfig {
         // Mybatis的模型别名
         sessionFactory.setTypeAliasesPackage(com.jobs.im.core.common.Cst.MYBATIS_MAPPER_YPE_ALIASES);
         return sessionFactory.getObject();
+    }
+
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+        DynamicTableNameInnerInterceptor interceptor = new DynamicTableNameInnerInterceptor();
+        Map<String, TableNameHandler> handlerMap = new HashMap<>();
+        handlerMap.put("im_chat_message", (sql, tableName) -> {
+            System.out.println("--------->sql:" + sql + ",tableName:" + tableName);
+            if ("im_chat_message".equalsIgnoreCase(tableName)) {
+                return tableName;
+            }
+            return tableName;
+        });
+        interceptor.setTableNameHandlerMap(handlerMap);
+        mybatisPlusInterceptor.addInnerInterceptor(interceptor);
+        return mybatisPlusInterceptor;
     }
 }

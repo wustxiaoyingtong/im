@@ -9,7 +9,7 @@
 
     <springProperty scope="context" name="LOG_PATH" source="logging.home"/>
     <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
-    <springProperty scope="context" name="SERVER_IP" source="spring.cloud.client.ip-address" />
+    <springProperty scope="context" name="SERVER_IP" source="spring.cloud.client.ip-address"/>
     <springProperty scope="context" name="SERVER_PORT" source="server.port"/>
 
     <!-- 日志最大的历史 30天 -->
@@ -134,16 +134,16 @@
     <!-- root级别 INFO -->
     <root level="INFO">
         <!-- 控制台输出 -->
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDOUT"/>
         <!-- 文件输出 -->
-        <appender-ref ref="ERROR" />
-        <appender-ref ref="INFO" />
-        <appender-ref ref="WARN" />
-        <appender-ref ref="DEBUG" />
-        <appender-ref ref="TRACE" />
+        <appender-ref ref="ERROR"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="WARN"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="TRACE"/>
     </root>
 
     <!--隐藏服务发现后输出的日志-->
     <logger name="com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver" level="WARN"/>
-
+    <logger name="com.jobs.im.file.dao" level="DEBUG"/>
 </configuration>

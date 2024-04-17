@@ -29,7 +29,7 @@ public class SysUser implements Serializable {
     /**
      * uid
      **/
-    @TableId(value = "uid")
+    @TableField(value = "uid")
     private String uid;
 
     /**

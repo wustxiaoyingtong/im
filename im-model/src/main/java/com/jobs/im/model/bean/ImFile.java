@@ -26,7 +26,7 @@ public class ImFile implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @TableId(value = "uid", type = IdType.AUTO)
+    @TableField(value = "uid")
     private String uid;
 
     /**

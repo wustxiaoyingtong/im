@@ -27,7 +27,7 @@ public class ImChatGroup implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @TableId(value = "uid")
+    @TableField(value = "uid")
     private String uid;
 
     /**
